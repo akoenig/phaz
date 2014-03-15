@@ -1,4 +1,4 @@
-# phaz
+# phaz [![Build Status](https://travis-ci.org/akoenig/phaz.png?branch=master)](https://travis-ci.org/akoenig/phaz)
 
 > Verifies that all your package.json files contain expected attributes.
 
@@ -12,8 +12,29 @@ Install with [npm](https://npmjs.org/package/phaz) globally.
 
 ## Usage examples
 
+Let's say you want to check all your package.json files:
+
     cd projects
     phaz name version bugs
+
+Output:
+
+    deflector
+    lingua (missing: bugs)
+    express-slicer
+    filepad (missing: bugs)
+    fuchur (missing: bugs)
+    gulp-imacss
+    gulp-image2cssref
+    gulp-npm
+    gulp-picturizer
+    gulp-svg2png
+    imacss
+    markdown2pdf (missing: bugs)
+    ninit
+    phaz (missing: bugs)
+    ...
+
 
 Will check all `package.json` files within all subdirectories of the current working directory.
 
@@ -47,6 +68,7 @@ strom.on('error', function onError (err) {
 
 #### attributes
 Type: `Array`
+
 Default: []
 
 The attributes that should be checked.
