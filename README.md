@@ -15,7 +15,7 @@ Install with [npm](https://npmjs.org/package/phaz) globally.
 Let's say you want to check all your package.json files:
 
     cd projects
-    phaz name version bugs
+    phaz bugs repository
 
 Output (is colored):
 
@@ -56,7 +56,7 @@ var fs = require('fs'),
     strom;
 
 strom = fs.createReadStream('/path/to/a/package.json')
-    .pipe(p.haz(['name', 'version', 'engine']))
+    .pipe(p.haz(['repository', 'engine']))
     .pipe(process.stdout);
 
 strom.on('error', function onError (err) {
@@ -74,6 +74,10 @@ Default: []
 The attributes that should be checked.
 
 ## Changelog
+
+### Version 0.1.2 (20140315)
+
+- Changed example in README.
 
 ### Version 0.1.1 (20140315)
 
