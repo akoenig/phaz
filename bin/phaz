@@ -27,7 +27,7 @@ var fs    = require('fs'),
  *
  */
 function printUsage () {
-    return console.log('Please define the required parameters!\n\nUsage: %s [package.json] fields\n', pkg.name);
+    return console.log('Please define the required parameters.\n\nUsage: %s [package.json] fields\n', pkg.name);
 }
 
 /**

@@ -17,7 +17,7 @@ Let's say you want to check all your package.json files:
     cd projects
     phaz name version bugs
 
-Output:
+Output (is colored):
 
     deflector
     lingua (missing: bugs)
@@ -74,6 +74,10 @@ Default: []
 The attributes that should be checked.
 
 ## Changelog
+
+### Version 0.1.1 (20140315)
+
+- Minor README extensions / fixes.
 
 ### Version 0.1.0 (20140315)
 
