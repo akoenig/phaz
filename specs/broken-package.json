@@ -1,0 +1,19 @@
+{
+  "name": "phaz",
+  "description": "Checks all Node.js modules within a directory if the package.json do have the specified attributes.",
+  "author": {
+    "name": "André König",
+    "email": "andre.koenig@posteo.de"
+  },
+  "version": "0.1.0",
+  "repository": {
+    "url": "git@github.com:akoenig/phaz.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "devDependencies": {
+    "gulp-jasmine": "^0.2.0",
+    "gulp": "^3.5.5",
+}

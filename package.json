@@ -1,0 +1,26 @@
+{
+  "name": "phaz",
+  "description": "Verifies that all your package.json files contain expected attributes.",
+  "author": {
+    "name": "André König",
+    "email": "andre.koenig@posteo.de"
+  },
+  "version": "0.1.0",
+  "repository": {
+    "url": "git@github.com:akoenig/phaz.git"
+  },
+  "preferGlobal": true,
+  "bin": "./bin/phaz",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "devDependencies": {
+    "gulp-jasmine": "^0.2.0",
+    "gulp": "^3.5.5",
+    "gulp-jshint": "^1.5.0"
+  },
+  "dependencies": {
+    "through": "^2.3.4"
+  }
+}

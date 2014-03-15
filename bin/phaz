@@ -1,0 +1,142 @@
+#!/usr/bin/env node
+
+/*
+ * phaz
+ *
+ * Copyright(c) 2014 André König <andre.koenig@posteo.de>
+ * MIT Licensed
+ *
+ */
+
+/**
+ * @author André König <andre.koenig@posteo.de>
+ *
+ */
+
+'use strict';
+
+var fs    = require('fs'),
+    path  = require('path'),
+    pkg   = require('../package.json'),
+    p     = require('../'),
+    args  = process.argv.slice(2, process.argv.length),
+    jsons = [];
+
+/**
+ * Print usage information
+ *
+ */
+function printUsage () {
+    return console.log('Please define the required parameters!\n\nUsage: %s [package.json] fields\n', pkg.name);
+}
+
+/**
+ * Creates a "red" string for the terminal.
+ *
+ */
+function red (value) {
+    return '\x1b[31m' + value + '\x1b[39m';
+}
+
+/**
+ * Creates a "green" string for the terminal.
+ *
+ */
+function green (value) {
+    return '\x1b[32m' + value + '\x1b[39m';
+}
+
+/**
+ * Performs the check on all available files.
+ *
+ */
+function perform () {
+    var result = '',
+        pkgjson;
+
+    pkgjson = jsons.pop();
+
+    function onError (err) {
+        console.error('%s: %s', pkgjson, err);
+
+        return perform();
+    }
+
+    function onChunk (chunk) {
+        result = result + chunk;
+    }
+
+    function onEnd () {
+        result = JSON.parse(result);
+
+        if (result.missing.length) {
+            console.log(red(result.name + ' (missing: %s)'), result.missing.join(', '));
+        } else {
+            console.log(green(result.name));
+        }
+
+        return perform();
+    }
+
+    if (!args.length) {
+        return printUsage();
+    }
+
+
+    if (pkgjson) {
+        fs.createReadStream(pkgjson)
+            .pipe(p.haz(args))
+            .on('data', onChunk)
+            .on('end', onEnd)
+            .on('error', onError);
+    }
+}
+
+/**
+ * Creates an array with all available package.json's
+ * from the current file listing.
+ *
+ */
+function scan (err, files) {
+    var len = files.length,
+        i = 0;
+
+    if (err) {
+        return console.error(red('Error while scanning all directories within the current working directory. %s'), err);
+    }
+
+    for (i; i < len; i = i + 1) {
+        files[i] = path.join(process.cwd(), files[i], 'package.json');
+        
+        if (fs.existsSync(files[i])) {
+            jsons.push(files[i]);
+        }
+    }
+
+    jsons.reverse();
+
+    return perform();
+}
+
+/**
+ * Checks if the first argument is a path to a package.json
+ *
+ */
+function exists (yes) {
+    if (yes) {
+        jsons.push(path.join(process.cwd(), args[0]));
+
+        args.splice(0, 1);
+
+        return perform();
+    } else {
+        return fs.readdir(process.cwd(), scan);
+    }
+}
+
+if (!args.length) {
+    return printUsage();
+}
+
+// First of all we have to check if the first argument is a package.json
+fs.exists(path.join(process.cwd(), args[0]), exists);
